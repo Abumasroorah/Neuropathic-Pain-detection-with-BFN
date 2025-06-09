@@ -236,7 +236,10 @@ for ii=1:size(BandwPLIEC,2)
 end
 
 
-
+High_NP_idx     = [1 4 7 10 15 18 19 21 23 24 28 32 33 35];
+Moderate_NP_idx = [2 5 9 12 16 17 20 22 29 34 36];
+Low_NP_idx      = [3 6 8 11 13 14 25 26 27 30 31];
+NC_idx = 37:49; 
 
 
 BandBFNEC_HighEC = Band_wPLIEC(High_NP_idx,:,:);
@@ -276,7 +279,7 @@ end
 
 
 for ii=1:size(HEC,1)
-    MDS_HighEC = iterativeMinDomSet(squeeze(HEC(ii,:,:)), 10);
+    MDS_HighEC = iterativeMinDomSet(squeeze(HEC(ii,:,:)), 5);
     MDS_HEC(ii) = {fiveconf(MDS_HighEC)};
 end
 
@@ -294,15 +297,15 @@ end
 
 HEC_conncomp = find_frequent_connected_subgraph(B_grHC,.5);
 
-Freq_HEC=sum (A_conn);
+Freq_HEC=sum (HEC_conncomp);
 
- dexHEC = find(Freq_HEC ~= 0);
+dexHEC = find(Freq_HEC ~= 0);
 MDS_sig_HEC = intersect(unique(MDS_HEC), find(Freq_HEC ~= 0));
 
 
 % highlightedIndices = [1, 2, 3, 4]; % Example indices
 MRPs = zeros(19,19);
-MDS_sig_HEC = [5, 10];
+% MDS_sig_HEC = [5, 10];
     
 % A = MDS_sig_HEC;
 % highlightedIndices = (A{1,1}); % Example indices
@@ -313,5 +316,88 @@ lay=Layout(config);
 plot_topo_abdul(lay,1,MDS_sig_HEC, 'm', 120);
 colormap winter
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%  For the NC case, the .lay file to be used is Norm_MDD19.lay.
+for ii=1:size(MEC,1)
+    MDS_ModEC = iterativeMinDomSet(squeeze(MEC(ii,:,:)), 5);
+    MDS_MEC(ii) = {fiveconf(MDS_ModEC)};
+end
+
+
+MDS_MEC = fiveconf(MDS_MEC);
+
+
+
+
+for ii=1:size(MEC,1)
+    a=(squeeze(MEC(ii,:,:)));
+    B_grMC{ii} = a;
+end
+
+
+MEC_conncomp = find_frequent_connected_subgraph(B_grMC,.5);
+
+Freq_MEC=sum (MEC_conncomp);
+
+dexMEC = find(Freq_MEC ~= 0);
+MDS_sig_MEC = intersect(unique(MDS_MEC), find(Freq_MEC ~= 0));
+
+
+% highlightedIndices = [1, 2, 3, 4]; % Example indices
+MRPs = zeros(19,19);
+% MDS_sig_HEC = [5, 10];
+    
+% A = MDS_sig_HEC;
+% highlightedIndices = (A{1,1}); % Example indices
+    
+figure
+config.layout='Pain19channn.lay';
+lay=Layout(config);
+plot_topo_abdul(lay,1,MDS_sig_MEC, 'm', 120);
+colormap winter
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+for ii=1:size(LEC,1)
+    MDS_LowEC = iterativeMinDomSet(squeeze(LEC(ii,:,:)), 10);
+    MDS_LEC(ii) = {fiveconf(MDS_LowEC)};
+end
+
+
+MDS_LEC = fiveconf(MDS_LEC);
+
+
+
+
+for ii=1:size(LEC,1)
+    a=(squeeze(LEC(ii,:,:)));
+    B_grLC{ii} = a;
+end
+
+
+LEC_conncomp = find_frequent_connected_subgraph(B_grLC,.5);
+
+Freq_LEC=sum (LEC_conncomp);
+
+dexLEC = find(Freq_LEC ~= 0);
+MDS_sig_LEC = intersect(unique(MDS_LEC), find(Freq_LEC ~= 0));
+
+
+% highlightedIndices = [1, 2, 3, 4]; % Example indices
+MRPs = zeros(19,19);
+% MDS_sig_HEC = [5, 10];
+    
+% A = MDS_sig_HEC;
+% highlightedIndices = (A{1,1}); % Example indices
+    
+figure
+config.layout='Pain19channn.lay';
+lay=Layout(config);
+plot_topo_abdul(lay,1,MDS_sig_LEC, 'm', 120);
+colormap winter
+
+
