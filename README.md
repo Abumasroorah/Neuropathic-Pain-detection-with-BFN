@@ -11,6 +11,7 @@ This repository contains MATLAB scripts designed for the analysis of EEG data fr
 ### Notes
 
 **Data Preprocessing**: Proper preprocessing is essential for achieving reliable and reproducible results in EEG-based research. In particular, careful identification and rejection of artifactual independent components (ICs) is strongly recommended.
+
 **Code Structure**: Most scripts include comments that explain their specific functions and workflows.
 
 Please ensure all toolboxes are installed and paths correctly set before running the scripts.
